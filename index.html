@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>WANDATATECH - ATS CHECKER</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+<!-- ══ PARTICLES BG ══ -->
+<canvas id="particleCanvas"></canvas>
+
+<!-- ══ HEADER ══ -->
+<header class="header">
+  <div class="header-inner">
+    <div class="logo-wrap">
+      
+      <div class="logo-text">
+        <span class="logo-brand">WANDATATECH</span>
+        <span class="logo-sub">AI · ATS INTELLIGENCE</span>
+      </div>
+    </div>
+    <nav class="header-nav">
+      <span class="nav-badge">
+        <span class="pulse-dot"></span>
+        Engine Online
+      </span>
+    </nav>
+  </div>
+</header>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-tag">AI-POWERED RESUME ANALYZER</div>
+    <h1 class="hero-title">
+      Know Your <span class="gradient-text">ATS Score</span><br/>Before They Do
+    </h1>
+    <p class="hero-subtitle">
+      Upload your resume. Our advanced AI engine analyzes it against<br/>
+      real ATS criteria — keyword density, formatting, skill match &amp; more.
+    </p>
+    <div class="hero-stats">
+      <div class="stat-item"><span class="stat-num">12+</span><span class="stat-label">Scoring Factors</span></div>
+      <div class="stat-div"></div>
+      <div class="stat-item"><span class="stat-num">100%</span><span class="stat-label">Private & Secure</span></div>
+      <div class="stat-div"></div>
+      <div class="stat-item"><span class="stat-num">AI</span><span class="stat-label">Powered Engine</span></div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="orbit-ring ring-1"></div>
+    <div class="orbit-ring ring-2"></div>
+    <div class="orbit-ring ring-3"></div>
+    <div class="score-preview">
+      <svg viewBox="0 0 140 140" class="score-svg-preview">
+        <circle cx="70" cy="70" r="58" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="10"/>
+        <circle cx="70" cy="70" r="58" fill="none" stroke="url(#gradPreview)" stroke-width="10"
+                stroke-linecap="round" stroke-dasharray="364" stroke-dashoffset="73"
+                transform="rotate(-90 70 70)"/>
+        <defs>
+          <linearGradient id="gradPreview" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#c8a96e"/>
+            <stop offset="100%" stop-color="#e8c87a"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <div class="score-preview-num">80<span>%</span></div>
+      <div class="score-preview-label">ATS SCORE</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ MAIN APP ══ -->
+<main class="app-container" id="mainApp">
+
+  <!-- ── MODE TABS ── -->
+  <div class="mode-tabs">
+    <button class="mode-tab active" data-mode="general" onclick="switchMode('general')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414A1 1 0 0121 9.414V19a2 2 0 01-2 2z"/>
+      </svg>
+      General ATS Check
+    </button>
+    <button class="mode-tab" data-mode="job" onclick="switchMode('job')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+      </svg>
+      Job-Specific Match
+    </button>
+  </div>
+
+  <!-- ── UPLOAD PANEL ── -->
+  <div class="upload-panel">
+
+    <!-- GENERAL MODE -->
+    <div class="mode-panel active" id="generalMode">
+      <div class="panel-header">
+        <h2>Resume ATS Analysis</h2>
+        <p>Get a comprehensive ATS compatibility score with detailed breakdown</p>
+      </div>
+      <div class="upload-zone" id="uploadZoneGeneral"
+           ondrop="handleDrop(event,'general')"
+           ondragover="handleDragOver(event)"
+           ondragleave="handleDragLeave(event)"
+           onclick="document.getElementById('fileInputGeneral').click()">
+        <div class="upload-icon">
+          <svg viewBox="0 0 64 64" fill="none">
+            <circle cx="32" cy="32" r="30" stroke="url(#upGrad)" stroke-width="2" fill="none"/>
+            <path d="M32 42V22M24 30l8-8 8 8" stroke="url(#upGrad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M22 44h20" stroke="url(#upGrad)" stroke-width="2.5" stroke-linecap="round"/>
+            <defs>
+              <linearGradient id="upGrad" x1="0" y1="0" x2="64" y2="64">
+                <stop offset="0%" stop-color="#c8a96e"/>
+                <stop offset="100%" stop-color="#1b3a6b"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <div class="upload-text">
+          <span class="upload-main">Drop your resume here</span>
+          <span class="upload-sub">or click to browse • PDF, DOCX, TXT supported</span>
+        </div>
+        <div class="file-info" id="fileInfoGeneral" style="display:none"></div>
+      </div>
+      <input type="file" id="fileInputGeneral" accept=".pdf,.doc,.docx,.txt" style="display:none" onchange="handleFileSelect(event,'general')"/>
+      <button class="analyze-btn" id="analyzeBtnGeneral" onclick="analyzeGeneral()" disabled>
+        <span class="btn-text">Analyze Resume</span>
+        <span class="btn-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          </svg>
+        </span>
+      </button>
+    </div>
+
+    <!-- JOB MODE -->
+    <div class="mode-panel" id="jobMode">
+      <div class="panel-header">
+        <h2>Job-Specific ATS Match</h2>
+        <p>See exactly how well your resume matches a specific job posting</p>
+      </div>
+      <div class="job-inputs">
+        <div class="input-group">
+          <label>Job Title</label>
+          <input type="text" id="jobTitleInput" placeholder="e.g. Senior Software Engineer, Data Analyst, Product Manager…" class="text-input"/>
+        </div>
+        <div class="input-group">
+          <label>Job Description <span class="label-hint">(paste full JD)</span></label>
+          <textarea id="jobDescInput" placeholder="Paste the complete job description here. The more detail, the more accurate the match analysis…" class="textarea-input" rows="6"></textarea>
+          <div class="char-counter" id="charCounter">0 characters</div>
+        </div>
+      </div>
+      <div class="upload-zone compact" id="uploadZoneJob"
+           ondrop="handleDrop(event,'job')"
+           ondragover="handleDragOver(event)"
+           ondragleave="handleDragLeave(event)"
+           onclick="document.getElementById('fileInputJob').click()">
+        <div class="upload-icon-sm">📄</div>
+        <div class="upload-text">
+          <span class="upload-main">Upload Resume</span>
+          <span class="upload-sub">PDF, DOCX, TXT</span>
+        </div>
+        <div class="file-info" id="fileInfoJob" style="display:none"></div>
+      </div>
+      <input type="file" id="fileInputJob" accept=".pdf,.doc,.docx,.txt" style="display:none" onchange="handleFileSelect(event,'job')"/>
+      <button class="analyze-btn gold" id="analyzeBtnJob" onclick="analyzeJob()" disabled>
+        <span class="btn-text">Check Job Match</span>
+        <span class="btn-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ── LOADING ── -->
+  <div class="loading-overlay" id="loadingOverlay" style="display:none">
+    <div class="loading-box">
+      <div class="loading-logo">
+        <img src="static/logo.png" alt="WANDATA"/>
+      </div>
+      <div class="loading-rings">
+        <div class="l-ring r1"></div>
+        <div class="l-ring r2"></div>
+        <div class="l-ring r3"></div>
+      </div>
+      <div class="loading-steps" id="loadingSteps">
+        <div class="l-step active" id="step1">📄 Extracting resume text…</div>
+        <div class="l-step" id="step2">🔍 Scanning ATS factors…</div>
+        <div class="l-step" id="step3">🧠 Running AI analysis…</div>
+        <div class="l-step" id="step4">📊 Generating report…</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── RESULTS ── -->
+  <div class="results-container" id="resultsContainer" style="display:none">
+
+    <!-- Score Hero -->
+    <div class="result-hero">
+      <div class="result-score-wrap">
+        <svg class="score-ring-svg" viewBox="0 0 200 200">
+          <defs>
+            <linearGradient id="scoreGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#c8a96e"/>
+              <stop offset="50%" stop-color="#e8c87a"/>
+              <stop offset="100%" stop-color="#1b3a6b"/>
+            </linearGradient>
+          </defs>
+          <circle cx="100" cy="100" r="86" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="14"/>
+          <circle id="scoreRingArc" cx="100" cy="100" r="86" fill="none"
+                  stroke="url(#scoreGrad)" stroke-width="14"
+                  stroke-linecap="round"
+                  stroke-dasharray="540"
+                  stroke-dashoffset="540"
+                  transform="rotate(-90 100 100)"
+                  style="transition: stroke-dashoffset 2s cubic-bezier(0.4,0,0.2,1)"/>
+        </svg>
+        <div class="score-center">
+          <div class="score-number" id="scoreNumber">0</div>
+          <div class="score-label">ATS SCORE</div>
+        </div>
+      </div>
+      <div class="result-meta">
+        <div class="result-grade" id="resultGrade">—</div>
+        <div class="result-verdict" id="resultVerdict">Analyzing…</div>
+        <div class="result-filename" id="resultFilename"></div>
+        <div class="result-badges" id="resultBadges"></div>
+      </div>
+    </div>
+
+    <!-- Components Grid -->
+    <div class="section-title">Score Breakdown</div>
+    <div class="components-grid" id="componentsGrid"></div>
+
+    <!-- Tabs -->
+    <div class="result-tabs">
+      <button class="result-tab active" onclick="showResultTab('skills')">Skills Found</button>
+      <button class="result-tab" onclick="showResultTab('keywords')">Keywords</button>
+      <button class="result-tab" onclick="showResultTab('tips')">Improvements</button>
+    </div>
+
+    <div class="result-tab-content active" id="tabSkills"></div>
+    <div class="result-tab-content" id="tabKeywords"></div>
+    <div class="result-tab-content" id="tabTips"></div>
+
+    <div class="result-actions">
+      <button class="action-btn" onclick="resetApp()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+        </svg>
+        Analyze Another Resume
+      </button>
+    </div>
+  </div>
+
+</main>
+
+<!-- ══ FEATURES SECTION ══ -->
+<section class="features-section">
+  <div class="features-inner">
+    <div class="features-header">
+      <div class="section-eyebrow">WHAT WE ANALYZE</div>
+      <h2>12+ ATS Intelligence Factors</h2>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">📋</div>
+        <h3>Section Detection</h3>
+        <p>Identifies all resume sections — Experience, Education, Skills, Summary & more</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔑</div>
+        <h3>Keyword Optimization</h3>
+        <p>Matches 50+ industry keywords and technical skills against your resume</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3>Action Verbs</h3>
+        <p>Detects 60+ power action verbs that make your experience stand out</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>Quantifiable Impact</h3>
+        <p>Finds numbers, percentages, and measurable achievements in your resume</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎯</div>
+        <h3>Job Description Match</h3>
+        <p>TF-IDF AI similarity scoring against any job description you provide</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📱</div>
+        <h3>Contact Completeness</h3>
+        <p>Checks email, phone, LinkedIn, GitHub and other contact essentials</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer class="footer">
+  <img src="static/logo.png" alt="WANDATA" class="footer-logo"/>
+  <div class="footer-text">
+    <strong>WANDATATECH</strong> — AI-Powered ATS Intelligence<br/>
+    <span>Your resume data is processed locally and never stored.</span>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
